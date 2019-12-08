@@ -41,3 +41,21 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3155621183
+    locked: 0
+  - name: Platform
+    uniqueID: 2338621071
+    locked: 0
+  - name: Effect
+    uniqueID: 236809535
+    locked: 0
+  - name: Player
+    uniqueID: 2158661297
+    locked: 0
+  - name: Question
+    uniqueID: 1928974333
+    locked: 0
+  - name: Gui
+    uniqueID: 2432173459
+    locked: 0
