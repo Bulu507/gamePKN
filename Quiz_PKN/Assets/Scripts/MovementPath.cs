@@ -23,7 +23,6 @@ public class MovementPath : MonoBehaviour
     #region Private Variables
     private int movingTo;
     private Boolean isIdle;
-    private int idleStatus;
     #endregion //Private Variables
 
     #region Setter Getter
@@ -37,15 +36,15 @@ public class MovementPath : MonoBehaviour
         get { return isIdle; }
         set { isIdle = value; }
     }
-    public int IdleStatus
-    {
-        get { return idleStatus; }
-        set { idleStatus = value; }
-    }
     public int StartFrom
     {
         get { return startFrom; }
         set { startFrom = value; }
+    }
+    public int MovementDirection
+    {
+        get { return movementDirection; }
+        set { movementDirection = value; }
     }
     #endregion
 
@@ -120,21 +119,38 @@ public class MovementPath : MonoBehaviour
             //If Linear path move from start to end then end to start then repeat
             if (PathType == PathTypes.linear)
             {
-                //If you are at the begining of the path
-                if (startFrom <= movingTo)
+                if (movementDirection == 1)
                 {
-                    isIdle = false;
-                    idleStatus = 0;
-                    movementDirection = 1; //Seting to 1 moves forward
+                    //If you are at the begining of the path
+                    if (startFrom <= movingTo)
+                    {
+                        isIdle = false;
+                        movementDirection = 1; //Seting to 1 moves forward
+                    }
+                    //Else if you are at the end of your path
+                    //else if (movingTo >= PathSequence.Length - 1)
+                    else if (startFrom >= movingTo - 1)
+                    {
+                        isIdle = true;
+                        continue;
+                    }
                 }
-                //Else if you are at the end of your path
-                //else if (movingTo >= PathSequence.Length - 1)
-                else if (startFrom >= movingTo - 1)
+               else if (movementDirection == -1)
                 {
-                    //movementDirection = -1; //Seting to -1 moves backwards
-                    isIdle = true;
-                    idleStatus = 1;
-                    continue;
+                    if (startFrom <= movingTo)
+                    {
+                        isIdle = true;
+                        movementDirection = 1;
+                        continue;
+                    }
+                    //Else if you are at the end of your path
+                    //else if (movingTo >= PathSequence.Length - 1)
+                    else if (startFrom >= movingTo - 1)
+                    {
+                        //movementDirection = -1; //Seting to -1 moves backwards
+                        isIdle = false;
+                        movementDirection = -1; //Seting to 1 moves forward
+                    }
                 }
                 
             }
@@ -147,21 +163,21 @@ public class MovementPath : MonoBehaviour
 
             //For Looping path you must move the index when you reach 
             //the begining or end of the PathSequence to loop the path
-            if(PathType == PathTypes.loop)
-            {
-                //If you just moved past the last point(moving forward)
-                if (startFrom >= PathSequence.Length)
-                {
-                    //Set the next point to move to as the first point in sequence
-                    startFrom = 0;
-                }
-                //If you just moved past the first point(moving backwards)
-                if (startFrom < 0)
-                {
-                    //Set the next point to move to as the last point in sequence
-                    startFrom = PathSequence.Length - 1;
-                }
-            }
+            //if(PathType == PathTypes.loop)
+            //{
+            //    //If you just moved past the last point(moving forward)
+            //    if (startFrom >= PathSequence.Length)
+            //    {
+            //        //Set the next point to move to as the first point in sequence
+            //        startFrom = 0;
+            //    }
+            //    //If you just moved past the first point(moving backwards)
+            //    if (startFrom < 0)
+            //    {
+            //        //Set the next point to move to as the last point in sequence
+            //        startFrom = PathSequence.Length - 1;
+            //    }
+            //}
         }
     }
     #endregion //Coroutines

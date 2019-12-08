@@ -71,9 +71,9 @@ public class P2Move : MonoBehaviour
 
 
         Debug.Log("Cekcurrent path = " + MyPath.StartFrom);
-        Debug.Log("Idle == " + MyPath.IdleStatus);
+        Debug.Log("Idle == " + MyPath.IsIdle);
 
-        if (MyPath.StartFrom == 7 && MyPath.IdleStatus != 0)
+        if (MyPath.StartFrom == 7 && MyPath.IsIdle == true)
         {
             //int t = 20;
             //Debug.Log("t ===== " + t);

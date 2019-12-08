@@ -69,22 +69,31 @@ public class FollowPath : MonoBehaviour
             rollDice = 0;
         }
 
-        
         Debug.Log("Cekcurrent path = " + MyPath.StartFrom);
-        Debug.Log("Idle == " + MyPath.IdleStatus);
-        
-        if (MyPath.StartFrom == 7 && MyPath.IdleStatus != 0 )
+        Debug.Log("MOVE = " + MyPath.MovementDirection);
+
+        if (MyPath.StartFrom == 19 && MyPath.IsIdle == true)
         {
             //int t = 20;
             //Debug.Log("t ===== " + t);
             //if (t < 0)
             //{
-                movingTo = myPosition + (3);
+                movingTo = myPosition - (3);
+                MyPath.MovementDirection = -1;
                 rollDice = 0;
                 Debug.Log("Harusnya maju");
+            
+            //MyPath.MovementDirection = 1;
             //}
         }
-        
+
+        //Debug.Log("Idle == " + MyPath.IdleStatus);
+
+        if(MyPath.IsIdle == true)
+        {
+            Debug.Log("MANDEGGGGGG");
+        }
+
         MyPath.MovingTo = movingTo;
         //Validate there is a path with a point in it
         if (pointInPath == null || pointInPath.Current == null)
