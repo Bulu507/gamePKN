@@ -10,15 +10,19 @@ public class FollowPath : MonoBehaviour
 
     #region Public Variables
     public MovementPath MyPath; // Reference to Movement Path Used
-    public float Speed = 1; // Speed object is moving
-    public float MaxDistanceToGoal = .1f; // How close does it have to be to the point to be considered at point
     public int diceValue; // value of rolldice
     #endregion //Public Variables
 
     #region Private Variables
+    private float Speed = 4; // Speed object is moving
+    private float MaxDistanceToGoal = .1f; // How close does it have to be to the point to be considered at point
     private IEnumerator<Transform> pointInPath; //Used to reference points returned from MyPath.GetNextPathPoint
     private int movingValue = 0; // used to container dicevalue + current position
     #endregion //Private Variables
+
+    #region Setter Getter
+
+    #endregion //Setter Getter
 
     // (Unity Named Methods)
     #region Main Methods
