@@ -47,6 +47,9 @@ TagManager:
   - name: Platform
     uniqueID: 2338621071
     locked: 0
+  - name: Platform1
+    uniqueID: 144833225
+    locked: 0
   - name: Effect
     uniqueID: 236809535
     locked: 0

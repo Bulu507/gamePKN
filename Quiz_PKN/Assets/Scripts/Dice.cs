@@ -11,6 +11,7 @@ public class Dice : MonoBehaviour
     #region Public Variables
 
     public Sprite[] diceSide;
+    public static GameObject p1_panel, p2_panel;
 
     #endregion //Public Variables
 
@@ -35,6 +36,10 @@ public class Dice : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         //diceSide = Resources.LoadAll<Sprite>("Assets/Resources/Dice/");
         rend.sprite = diceSide[0];
+        p1_panel = GameObject.Find("P1_on");
+        p2_panel = GameObject.Find("P2_on");
+        p1_panel.SetActive(true);
+        p2_panel.SetActive(false);
     }
 
     // Update is called once per frame
@@ -63,7 +68,7 @@ public class Dice : MonoBehaviour
 
     private IEnumerator RollTheDice()
     {
-        //coroutineAllowed = false;
+        coroutineAllowed = false;
         int randomDiceSide = 0;
         for (int i =0; i < 20; i++)
         {
@@ -72,18 +77,22 @@ public class Dice : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        //GameController.diceSideThorwn = randomDiceSide + 1;
-        //if (whosTurn == 1)
-        //{
-        //    GameController.MovePlayer(1);
-        //}
-        //else if (whosTurn == -1)
-        //{
-        //    GameController.MovePlayer(2);
-        //}
+        GameController.diceSideThrown = randomDiceSide + 1;
+        if (whosTurn == 1)
+        {
+            GameController.MovedPlayer(1);
+            p1_panel.SetActive(true);
+            p2_panel.SetActive(false);
+        }
+        else if (whosTurn == -1)
+        {
+            GameController.MovedPlayer(2);
+            p1_panel.SetActive(false);
+            p2_panel.SetActive(true);
+        }
 
         whosTurn *= -1;
-        coroutineAllowed = false;
+        coroutineAllowed = true;
     }
 
     #endregion //Coroutines

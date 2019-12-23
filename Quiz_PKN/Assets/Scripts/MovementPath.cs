@@ -48,7 +48,7 @@ public class MovementPath : MonoBehaviour
     //Update is called by Unity every frame
     void Update()
     {
-        Debug.Log("IS IDle == " + isIdle);
+
     }
 
     //OnDrawGizmos will draw lines between our points in the Unity Editor
@@ -144,7 +144,6 @@ public class MovementPath : MonoBehaviour
                     isIdle = true;
                     movementDirection = 1; //Seting to 1 moves forward
                     move = "forward";
-                    Debug.Log("Moving to 1 = " + movingTo);
                     continue;
                 }
                 //Else if you are at the end of your path
@@ -152,11 +151,11 @@ public class MovementPath : MonoBehaviour
                 {
                     isIdle = false;
                     movementDirection = -1; //Seting to -1 moves backwards
-                    Debug.Log("Moving to 2 = " + movingTo);
+                    //Debug.Log("Moving to 2 = " + movingTo);
                 }
             }
             movingTo = movingTo + movementDirection;
-            Debug.Log("Moving to 3 = " + movingTo);
+            //Debug.Log("Moving to 3 = " + movingTo);
         }
     }
     #endregion //Coroutines

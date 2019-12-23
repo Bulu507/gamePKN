@@ -45,6 +45,19 @@ public class GameController : MonoBehaviour
     //(Custom Named Methods)
     #region Utility Methods 
 
+    public static void MovedPlayer(int playerToMove)
+    {
+        switch (playerToMove)
+        {
+            case 1:
+                player1.GetComponent<FollowPath>().diceValue = diceSideThrown;
+                break;
+            case 2:
+                player2.GetComponent<FollowPath>().diceValue = diceSideThrown;
+                break;
+        }
+    }
+
     #endregion //Utility Methods
 
     //Coroutines run parallel to other fucntions
