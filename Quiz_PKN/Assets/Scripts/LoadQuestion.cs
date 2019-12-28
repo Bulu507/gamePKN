@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LoadQuestion : MonoBehaviour
 {
@@ -13,6 +14,9 @@ public class LoadQuestion : MonoBehaviour
     #region Public Variables
 
     List<Question> question = new List<Question>();
+    public Text QPanel,answerA;
+    public Button btnA;
+    public int randQuest;
 
     #endregion //Public Variables
 
@@ -53,10 +57,26 @@ public class LoadQuestion : MonoBehaviour
             }
         }
 
-        foreach (Question q in question)
-        {
-            Debug.Log(q.question);
-        }
+        //foreach(Question q in question)
+        //{
+        //    Debug.Log(q.question);
+        //}
+
+        //Debug.Log(question[2].question);
+        QPanel = GameObject.Find("question_text").GetComponent<Text>();
+        btnA = GameObject.Find("ButtonA").GetComponent<Button>();
+        answerA = GameObject.Find("btnA_txt").GetComponent<Text>();
+
+        QPanel.text = question[2].question;
+        answerA.text = question[2].choiceA;
+
+        //Debug.Log(question.Count);
+        randQuest = Random.Range(0, question.Count);
+        
+        //while (question[randQuest].status == 0)
+        //{
+
+        //}
     }
 
     // Update is called once per frame
