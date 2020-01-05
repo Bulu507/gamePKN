@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -11,8 +12,11 @@ public class GameController : MonoBehaviour
     #region Public Variables
 
     public static GameObject player1, player2;
+    public static int playerPlay;
+    public static int diceSideThrown;
+    public static int IsFirstPlay =0;
+    public LoadQuestion LoadQuest;
 
-    public static int diceSideThrown = 0;
 
     #endregion //Public Variables
 
@@ -47,6 +51,7 @@ public class GameController : MonoBehaviour
 
     public static void MovedPlayer(int playerToMove)
     {
+        playerPlay = playerToMove;
         switch (playerToMove)
         {
             case 1:
@@ -56,8 +61,8 @@ public class GameController : MonoBehaviour
                 player2.GetComponent<FollowPath>().diceValue = diceSideThrown;
                 break;
         }
-    }
 
+    }
     #endregion //Utility Methods
 
     //Coroutines run parallel to other fucntions

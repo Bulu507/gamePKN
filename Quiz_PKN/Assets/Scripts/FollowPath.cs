@@ -96,23 +96,11 @@ public class FollowPath : MonoBehaviour
                                             pointInPath.Current.position,
                                             Time.deltaTime * Speed);
 
-        //Check to see if you are close enough to the next point to start moving to the following one
-        //Using Pythagorean Theorem
-        //per unity suaring a number is faster than the square root of a number
-        //Using .sqrMagnitude 
         var distanceSquared = (transform.position - pointInPath.Current.position).sqrMagnitude;
         if (distanceSquared < MaxDistanceToGoal * MaxDistanceToGoal) //If you are close enough
         {
             pointInPath.MoveNext(); //Get next point in MovementPath
         }
-        //The version below uses Vector3.Distance same as Vector3.Magnitude which includes (square root)
-        /*
-        var distanceSquared = Vector3.Distance(transform.position, pointInPath.Current.position);
-        if (distanceSquared < MaxDistanceToGoal) //If you are close enough
-        {
-            pointInPath.MoveNext(); //Get next point in MovementPath
-        }
-        */
     }
     #endregion //Main Methods
 

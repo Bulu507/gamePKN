@@ -10,6 +10,7 @@ public class Dice : MonoBehaviour
 
     #region Public Variables
 
+    public LoadQuestion TheQuestion;
     public Sprite[] diceSide;
     public static GameObject p1_panel, p2_panel;
 
@@ -17,6 +18,7 @@ public class Dice : MonoBehaviour
 
     #region Private Variables
 
+    private GameObject[] Players;
     private SpriteRenderer rend;
     private int whosTurn = 1;
     private bool coroutineAllowed = true;
@@ -36,16 +38,18 @@ public class Dice : MonoBehaviour
         rend = GetComponent<SpriteRenderer>();
         //diceSide = Resources.LoadAll<Sprite>("Assets/Resources/Dice/");
         rend.sprite = diceSide[0];
+
+        Players = GameObject.FindGameObjectsWithTag("Player");
         p1_panel = GameObject.Find("P1_on");
         p2_panel = GameObject.Find("P2_on");
         p1_panel.SetActive(true);
         p2_panel.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 
     #endregion //Main Methods
@@ -55,10 +59,15 @@ public class Dice : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (coroutineAllowed)
+        if (GameController.IsFirstPlay == 0)
+        {
+            GameController.IsFirstPlay = 1;
+        }
+        else if (coroutineAllowed)
         {
             StartCoroutine("RollTheDice");
         }
+        
     }
 
     #endregion //Utility Methods
@@ -70,29 +79,54 @@ public class Dice : MonoBehaviour
     {
         coroutineAllowed = false;
         int randomDiceSide = 0;
-        for (int i =0; i < 20; i++)
+        
+        for (int i =0; i < 15; i++)
         {
             randomDiceSide = Random.Range(0, 6);
             rend.sprite = diceSide[randomDiceSide];
             yield return new WaitForSeconds(0.05f);
         }
 
-        GameController.diceSideThrown = randomDiceSide + 1;
-        if (whosTurn == 1)
+        if (LoadQuestion.QuestionAnswer == true)
         {
-            GameController.MovedPlayer(1);
-            p1_panel.SetActive(true);
-            p2_panel.SetActive(false);
+            GameController.diceSideThrown = randomDiceSide + 1;
         }
-        else if (whosTurn == -1)
+        else
         {
-            GameController.MovedPlayer(2);
-            p1_panel.SetActive(false);
-            p2_panel.SetActive(true);
+            GameController.diceSideThrown = 0;
         }
 
-        whosTurn *= -1;
+        switch (whosTurn)
+        {
+            case 1:
+                GameController.MovedPlayer(1);
+                p1_panel.SetActive(true);
+                p2_panel.SetActive(false);
+                break;
+            case 2:
+                GameController.MovedPlayer(2);
+                p1_panel.SetActive(true);
+                p2_panel.SetActive(false);
+                break;
+            case 3:
+                GameController.MovedPlayer(3);
+                p1_panel.SetActive(true);
+                p2_panel.SetActive(false);
+                break;
+            case 4:
+                GameController.MovedPlayer(4);
+                p1_panel.SetActive(true);
+                p2_panel.SetActive(false);
+                break;
+        }
+
+        whosTurn += 1;
+        if (whosTurn >= Players.Length + 1)
+        {
+            whosTurn = 1;
+        }
         coroutineAllowed = true;
+
     }
 
     #endregion //Coroutines

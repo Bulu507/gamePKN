@@ -10,6 +10,7 @@ public class Question
    public string choiceB;
    public string choiceC;
    public string choiceD;
-   public string answer;
-   public int status;
+   //public string answer;
+   public int answer;
+   //public int status;
 }

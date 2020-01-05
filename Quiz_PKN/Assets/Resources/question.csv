@@ -1,11 +1,11 @@
-id;question;choiceA;choiceB;choiceC;choiceD;answer;status
-1;Bulu Bulu ?;Huba;Habu;Dudu;Iya;Huba;0
-2;Apa?;Iya;Hee;Hudas;Asd;Iya;0
-3;Mengapa?;Dia;Kamu;kita;Mereka;Dia;0
-4;Karena?;Mereka;Kita;Dia;Kamu;Mereka;0
-5;Apakah?;Karena;Dia;Kamu;Bukan;Kamu;0
-6;Mungkinkah?;Kita;Kan;Selalu;Bersama;Selalu;0
-7;;;;;;;
-8;;;;;;;
-9;;;;;;;
-10;;;;;;;
+id;question;choiceA;choiceB;choiceC;choiceD;answer
+1;Indonesia merupakan negara kepulauan yang terdiri atas 13.466 pulau. Pemerintahan harus memberikan perhatian kepada semua masyarakat yang berada di setiap penjuru tanah air terutama pulau-pulau terdepan. Inti uraian tersebut sesuai asas wawasan nusantara yaitu ...;Keadilan;Kejujuran;Kepentingan yang sama;Konsensus untuk menjadi suatu bangsa;1
+2;Apa?;Iya;Hee;Hudas;Asd;1
+3;Mengapa?;Dia;Kamu;kita;Mereka;1
+4;Karena?;Mereka;Kita;Dia;Kamu;1
+5;Apakah?;Karena;Dia;Kamu;Bukan;2
+6;Mungkinkah?;Kita;Kan;Selalu;Bersama;2
+7;;;;;;
+8;;;;;;
+9;;;;;;
+10;;;;;;
