@@ -13,6 +13,8 @@ public class Dice : MonoBehaviour
     public LoadQuestion TheQuestion;
     public Sprite[] diceSide;
     public static GameObject p1_panel, p2_panel;
+    public static int whosTurn = 1;
+    public static bool coroutineAllowed = true;
 
     #endregion //Public Variables
 
@@ -20,8 +22,6 @@ public class Dice : MonoBehaviour
 
     private GameObject[] Players;
     private SpriteRenderer rend;
-    private int whosTurn = 1;
-    private bool coroutineAllowed = true;
 
     #endregion //Private Variables
 
@@ -59,15 +59,18 @@ public class Dice : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameController.IsFirstPlay == 0)
+        if (GameController.PlayCondition == 0)
         {
-            GameController.IsFirstPlay = 1;
+            GameController.PlayCondition = 1;
         }
-        else if (coroutineAllowed)
+        else if (GameController.PlayCondition == 3)
         {
-            StartCoroutine("RollTheDice");
+            if (coroutineAllowed)
+            {
+                StartCoroutine("RollTheDice");
+            }
         }
-        
+
     }
 
     #endregion //Utility Methods
@@ -87,46 +90,31 @@ public class Dice : MonoBehaviour
             yield return new WaitForSeconds(0.05f);
         }
 
-        if (LoadQuestion.QuestionAnswer == true)
-        {
-            GameController.diceSideThrown = randomDiceSide + 1;
-        }
-        else
-        {
-            GameController.diceSideThrown = 0;
-        }
+        GameController.diceSideThrown = randomDiceSide + 1;
 
         switch (whosTurn)
         {
             case 1:
                 GameController.MovedPlayer(1);
-                p1_panel.SetActive(true);
-                p2_panel.SetActive(false);
                 break;
             case 2:
                 GameController.MovedPlayer(2);
-                p1_panel.SetActive(true);
-                p2_panel.SetActive(false);
                 break;
             case 3:
                 GameController.MovedPlayer(3);
-                p1_panel.SetActive(true);
-                p2_panel.SetActive(false);
                 break;
             case 4:
                 GameController.MovedPlayer(4);
-                p1_panel.SetActive(true);
-                p2_panel.SetActive(false);
                 break;
         }
 
         whosTurn += 1;
-        if (whosTurn >= Players.Length + 1)
+        if (whosTurn > GameController.Players)
         {
             whosTurn = 1;
         }
         coroutineAllowed = true;
-
+        GameController.PlayCondition = 0;
     }
 
     #endregion //Coroutines

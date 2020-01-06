@@ -17,16 +17,18 @@ public class LoadQuestion : MonoBehaviour
 
     GameObject[] Path;
     public static bool QuestionAnswer;
+    public int answer;
 
     #endregion //Public Variables
 
     #region Private Variables
 
-    private  List<Question> question = new List<Question>();
-    private  Question currentQuestion;
-    private  Text QText, answerA, answerB, answerC, answerD;
-    private  Button btnA, btnB, btnC, btnD;
-    private  SpriteRenderer QBoard;
+    private List<Question> question = new List<Question>();
+    private Question currentQuestion;
+    private Text QText, answerA, answerB, answerC, answerD;
+    private Button btnA, btnB, btnC, btnD;
+    private SpriteRenderer QBoard;
+    private GameObject player1, player2, dice;
 
     #endregion //Private Variables
 
@@ -58,6 +60,9 @@ public class LoadQuestion : MonoBehaviour
         answerB = GameObject.Find("btnB_txt").GetComponent<Text>();
         answerC = GameObject.Find("btnC_txt").GetComponent<Text>();
         answerD = GameObject.Find("btnD_txt").GetComponent<Text>();
+        player1 = GameObject.Find("P1");
+        player2 = GameObject.Find("P2");
+        dice = GameObject.Find("Dice");
 
         EnableQuestion(false);
 
@@ -67,27 +72,9 @@ public class LoadQuestion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(GameController.IsFirstPlay == 1)
+        if (GameController.IsFirstPlay == 1)
         {
-            GameController.playerPlay = 5;
-        }
-        switch (GameController.playerPlay)
-        {
-            case 1:
-                if (Path[0].GetComponent<MovementPath>().IsIdle == true && Path[0].GetComponent<MovementPath>().MovingTo != 0)
-                {
-                    GameController.playerPlay = 5;
-                }
-                break;
-            case 2:
-                if (Path[1].GetComponent<MovementPath>().IsIdle == true && Path[1].GetComponent<MovementPath>().MovingTo != 0)
-                {
-                    GameController.playerPlay = 5;
-                }
-                break;
-            case 5:
-                ShowQuestion();
-                break;
+            ShowQuestion();
         }
 
         if (Input.GetKeyDown("space"))
@@ -95,7 +82,7 @@ public class LoadQuestion : MonoBehaviour
             EnableQuestion(false);
         }
 
-        Debug.Log(QuestionAnswer);
+        Debug.Log("GP = " + GameController.playerPlay);
     }
 
     #endregion //Main Methods
@@ -128,73 +115,6 @@ public class LoadQuestion : MonoBehaviour
         }
     }
 
-    public void ShowQuestion()
-    {
-        GameController.IsFirstPlay = 3;
-        GameController.playerPlay = 0;
-
-        int randQuestIndex = Random.Range(0, question.Count);
-
-        EnableQuestion(true);
-
-        QText.text = question[randQuestIndex].question;
-        answerA.text = question[randQuestIndex].choiceA;
-        answerB.text = question[randQuestIndex].choiceB;
-        answerC.text = question[randQuestIndex].choiceC;
-        answerD.text = question[randQuestIndex].choiceD;
-
-        CekQuestion(randQuestIndex);
-
-        //StartCoroutine(CekQuest(randQuestIndex));
-
-    }
-
-    public void CekQuestion(int questIndex)
-    {
-        int answer = 0;
-        int ans = question[questIndex].answer;
-        
-        if(EventSystem.current.currentSelectedGameObject.name != null)
-        {
-            switch (EventSystem.current.currentSelectedGameObject.name)
-            {
-                case "ButtonA":
-                    answer = 1;
-                    break;
-                case "ButtonB":
-                    answer = 2;
-                    break;
-                case "ButtonC":
-                    answer = 3;
-                    break;
-                case "ButtonD":
-                    answer = 4;
-                    break;
-            }
-        }
-
-        if (ans == answer)
-        {
-            Debug.Log("Jawaban Benar");
-            QuestionAnswer = true;
-            EnableQuestion(false);
-        }
-        else
-        {
-            Debug.Log("Jawaban Salah");
-            QuestionAnswer = false;
-            EnableQuestion(false);
-        }
-
-        
-        question.RemoveAt(questIndex);
-        if(question.Count == 0)
-        {
-            loadQuest();
-        }
-
-    }
-
     private void EnableQuestion(bool visible)
     {
         QText.enabled = visible;
@@ -213,57 +133,93 @@ public class LoadQuestion : MonoBehaviour
         btnD.image.enabled = visible;
     }
 
-    #endregion //Utility Methods
-
-    //Coroutines run parallel to other fucntions
-    #region Coroutines
-
-    private IEnumerator CekQuest(int questIndex) 
+    public void VisiblePlayer(bool b)
     {
-        int answer = 0;
+        player1.SetActive(b);
+        player2.SetActive(b);
+        dice.SetActive(b);
+    }
+
+    public void ShowQuestion()
+    {
+        GameController.IsFirstPlay = 3;
+        GameController.playerPlay = 0;
+
+        VisiblePlayer(false);
+
+        int randQuestIndex = Random.Range(0, question.Count);
+
+        EnableQuestion(true);
+
+        QText.text = question[randQuestIndex].question;
+        answerA.text = question[randQuestIndex].choiceA;
+        answerB.text = question[randQuestIndex].choiceB;
+        answerC.text = question[randQuestIndex].choiceC;
+        answerD.text = question[randQuestIndex].choiceD;
+
+        CekQuestion(randQuestIndex);
+
+    }
+
+    public void CekQuestion(int questIndex)
+    {
+         answer = 0;
         int ans = question[questIndex].answer;
 
-        if (EventSystem.current.currentSelectedGameObject.name != null)
+        switch (EventSystem.current.currentSelectedGameObject.name)
         {
-            switch (EventSystem.current.currentSelectedGameObject.name)
-            {
-                case "ButtonA":
-                    answer = 1;
-                    break;
-                case "ButtonB":
-                    answer = 2;
-                    break;
-                case "ButtonC":
-                    answer = 3;
-                    break;
-                case "ButtonD":
-                    answer = 4;
-                    break;
-            }
+            case "ButtonA":
+                answer = 1;
+                break;
+            case "ButtonB":
+                answer = 2;
+                break;
+            case "ButtonC":
+                answer = 3;
+                break;
+            case "ButtonD":
+                answer = 4;
+                break;
         }
 
-        if (ans == answer)
+        if (ans == answer || answer == 3 || answer == 4)
         {
             Debug.Log("Jawaban Benar");
             QuestionAnswer = true;
             EnableQuestion(false);
+            VisiblePlayer(true);
         }
         else
         {
             Debug.Log("Jawaban Salah");
             QuestionAnswer = false;
             EnableQuestion(false);
+            VisiblePlayer(true);
+            GameController.IsFirstPlay = 0;
+            Dice.whosTurn += 1;
+            if (Dice.whosTurn > GameController.Players)
+            {
+                Dice.whosTurn = 1;
+            }
         }
 
-
+        
         question.RemoveAt(questIndex);
         if (question.Count == 0)
         {
             loadQuest();
         }
 
-        yield return new WaitForSeconds(1);
+        Dice.coroutineAllowed = true;
     }
+
+
+
+    #endregion //Utility Methods
+
+    //Coroutines run parallel to other fucntions
+    #region Coroutines
+
 
     #endregion //Coroutines
 }

@@ -11,12 +11,13 @@ public class GameController : MonoBehaviour
 
     #region Public Variables
 
-    public static GameObject player1, player2;
+    public static GameObject player1, player2, player3, player4;
     public static int playerPlay;
     public static int diceSideThrown;
-    public static int IsFirstPlay =0;
-    public LoadQuestion LoadQuest;
-
+    public static int PlayCondition =0;
+    public static int Players =2;
+    public GameObject p1_panel, p2_panel, p3_panel, p4_panel;
+    public GameObject p1_on, p2_on, p3_on, p4_on;
 
     #endregion //Public Variables
 
@@ -36,6 +37,21 @@ public class GameController : MonoBehaviour
     {
         player1 = GameObject.Find("P1");
         player2 = GameObject.Find("P2");
+        player3 = GameObject.Find("P3");
+        player4 = GameObject.Find("P4");
+
+        p1_on = GameObject.Find("P1_on");
+        p2_on = GameObject.Find("P2_on");
+        p3_on = GameObject.Find("P3_on");
+        p4_on = GameObject.Find("P4_on");
+
+        p1_panel = GameObject.Find("p1_panel");
+        p2_panel = GameObject.Find("p2_panel");
+        p3_panel = GameObject.Find("p3_panel");
+        p4_panel = GameObject.Find("p4_panel");
+
+        SetPlayer(Players);
+
     }
 
     // Update is called once per frame
@@ -62,6 +78,26 @@ public class GameController : MonoBehaviour
                 break;
         }
 
+    }
+
+    private void SetPlayer(int totalPlayer)
+    {
+        switch (totalPlayer)
+        {
+            case 2:
+                player3.SetActive(false);
+                player4.SetActive(false);
+                p3_panel.SetActive(false);
+                p4_panel.SetActive(false);
+                p3_on.SetActive(false);
+                p4_on.SetActive(false);
+                break;
+            case 3:
+                player4.SetActive(false);
+                p4_panel.SetActive(false);
+                p4_on.SetActive(false);
+                break;
+        }
     }
     #endregion //Utility Methods
 
