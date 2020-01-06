@@ -72,7 +72,7 @@ public class LoadQuestion : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameController.IsFirstPlay == 1)
+        if (GameController.PlayCondition == 1)
         {
             ShowQuestion();
         }
@@ -142,7 +142,7 @@ public class LoadQuestion : MonoBehaviour
 
     public void ShowQuestion()
     {
-        GameController.IsFirstPlay = 3;
+        GameController.PlayCondition = 3;
         GameController.playerPlay = 0;
 
         VisiblePlayer(false);
@@ -195,12 +195,14 @@ public class LoadQuestion : MonoBehaviour
             QuestionAnswer = false;
             EnableQuestion(false);
             VisiblePlayer(true);
-            GameController.IsFirstPlay = 0;
+            GameController.PlayCondition = 0;
             Dice.whosTurn += 1;
             if (Dice.whosTurn > GameController.Players)
             {
                 Dice.whosTurn = 1;
             }
+            GameController.SetActivePlayer(Dice.whosTurn);
+            Dice.coroutineAllowed = true;
         }
 
         
@@ -209,8 +211,6 @@ public class LoadQuestion : MonoBehaviour
         {
             loadQuest();
         }
-
-        Dice.coroutineAllowed = true;
     }
 
 

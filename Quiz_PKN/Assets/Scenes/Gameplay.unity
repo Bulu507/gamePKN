@@ -2132,8 +2132,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 217832733}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 221.5, y: -208, z: 0}
-  m_LocalScale: {x: 1.2, y: 1.2, z: 0}
+  m_LocalPosition: {x: 229.03, y: -201.76, z: 0}
+  m_LocalScale: {x: 8, y: 8, z: 0}
   m_Children: []
   m_Father: {fileID: 1330629403}
   m_RootOrder: 1
@@ -2189,7 +2189,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: a49361484d5838847bb447894020bc7d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: bd69805c000709e4e8881e4f2fafc666, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -4722,6 +4722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d300df4871c958744b5ca4b606a96ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  answer: 0
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -9982,8 +9983,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 924620071}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 540, y: 267, z: 0}
-  m_LocalScale: {x: 2.3, y: 2.3, z: 0}
+  m_LocalPosition: {x: 537.71, y: 266.9, z: 0}
+  m_LocalScale: {x: 15, y: 15, z: 0}
   m_Children: []
   m_Father: {fileID: 808546986}
   m_RootOrder: 0
@@ -10025,7 +10026,7 @@ SpriteRenderer:
   m_SortingLayerID: 236809535
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 11227d5ef5b242d4a95519b64d81df2d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ff46a3a728fcf45428558c30dc9d77b6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -19583,14 +19584,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b3828ab5d7a01d4bb145c101d4878ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  p1_panel: {fileID: 0}
-  p2_panel: {fileID: 0}
-  p3_panel: {fileID: 0}
-  p4_panel: {fileID: 0}
-  p1_on: {fileID: 0}
-  p2_on: {fileID: 0}
-  p3_on: {fileID: 0}
-  p4_on: {fileID: 0}
 --- !u!4 &1815928305
 Transform:
   m_ObjectHideFlags: 0
@@ -19617,6 +19610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d300df4871c958744b5ca4b606a96ab7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  answer: 0
 --- !u!1 &1817749988
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,8 +16,8 @@ public class GameController : MonoBehaviour
     public static int diceSideThrown;
     public static int PlayCondition =0;
     public static int Players =2;
-    public GameObject p1_panel, p2_panel, p3_panel, p4_panel;
-    public GameObject p1_on, p2_on, p3_on, p4_on;
+    public static GameObject p1_panel, p2_panel, p3_panel, p4_panel;
+    public static GameObject p1_on, p2_on, p3_on, p4_on;
 
     #endregion //Public Variables
 
@@ -51,7 +51,7 @@ public class GameController : MonoBehaviour
         p4_panel = GameObject.Find("p4_panel");
 
         SetPlayer(Players);
-
+        GameController.SetActivePlayer(1);
     }
 
     // Update is called once per frame
@@ -76,6 +76,12 @@ public class GameController : MonoBehaviour
             case 2:
                 player2.GetComponent<FollowPath>().diceValue = diceSideThrown;
                 break;
+            case 3:
+                player3.GetComponent<FollowPath>().diceValue = diceSideThrown;
+                break;
+            case 4:
+                player4.GetComponent<FollowPath>().diceValue = diceSideThrown;
+                break;
         }
 
     }
@@ -96,6 +102,75 @@ public class GameController : MonoBehaviour
                 player4.SetActive(false);
                 p4_panel.SetActive(false);
                 p4_on.SetActive(false);
+                break;
+        }
+    }
+
+    public static void SetActivePlayer(int playerSet)
+    {
+        switch (Players)
+        {
+            case 2:
+                if(playerSet == 1)
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = true;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                break;
+            case 3:
+                if (playerSet == 1)
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = true;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else if (playerSet == 2)
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = true;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                break;
+            case 4:
+                if (playerSet == 1)
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = true;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p4_on.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else if (playerSet == 2)
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = true;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p4_on.GetComponent<SpriteRenderer>().enabled = false;
+                }
+                else if (playerSet == 3)
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = true;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = true;
+                }
+                else
+                {
+                    p1_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p2_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p3_on.GetComponent<SpriteRenderer>().enabled = false;
+                    p4_on.GetComponent<SpriteRenderer>().enabled = true;
+                }
                 break;
         }
     }

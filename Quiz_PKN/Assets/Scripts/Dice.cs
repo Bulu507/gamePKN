@@ -39,12 +39,6 @@ public class Dice : MonoBehaviour
         //diceSide = Resources.LoadAll<Sprite>("Assets/Resources/Dice/");
         rend.sprite = diceSide[0];
 
-        Players = GameObject.FindGameObjectsWithTag("Player");
-        p1_panel = GameObject.Find("P1_on");
-        p2_panel = GameObject.Find("P2_on");
-        p1_panel.SetActive(true);
-        p2_panel.SetActive(false);
-
     }
 
     // Update is called once per frame
@@ -59,13 +53,13 @@ public class Dice : MonoBehaviour
 
     private void OnMouseDown()
     {
-        if (GameController.PlayCondition == 0)
+        if (coroutineAllowed)
         {
-            GameController.PlayCondition = 1;
-        }
-        else if (GameController.PlayCondition == 3)
-        {
-            if (coroutineAllowed)
+            if (GameController.PlayCondition == 0)
+            {
+                GameController.PlayCondition = 1;
+            }
+            else if (GameController.PlayCondition == 3)
             {
                 StartCoroutine("RollTheDice");
             }
@@ -113,8 +107,12 @@ public class Dice : MonoBehaviour
         {
             whosTurn = 1;
         }
-        coroutineAllowed = true;
+        
         GameController.PlayCondition = 0;
+        GameController.SetActivePlayer(whosTurn);
+
+        yield return new WaitForSeconds(3);
+        coroutineAllowed = true;
     }
 
     #endregion //Coroutines
