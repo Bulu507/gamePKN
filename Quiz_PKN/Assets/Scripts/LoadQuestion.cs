@@ -26,6 +26,7 @@ public class LoadQuestion : MonoBehaviour
     private List<Question> question = new List<Question>();
     private Question currentQuestion;
     private Text QText, answerA, answerB, answerC, answerD;
+    private Text pointP1, pointP2, pointP3, pointP4;
     private Button btnA, btnB, btnC, btnD;
     private SpriteRenderer QBoard;
     private GameObject player1, player2, dice;
@@ -60,6 +61,10 @@ public class LoadQuestion : MonoBehaviour
         answerB = GameObject.Find("btnB_txt").GetComponent<Text>();
         answerC = GameObject.Find("btnC_txt").GetComponent<Text>();
         answerD = GameObject.Find("btnD_txt").GetComponent<Text>();
+        pointP1 = GameObject.Find("P1_point").GetComponent<Text>();
+        pointP2 = GameObject.Find("P2_point").GetComponent<Text>();
+        pointP3 = GameObject.Find("P3_point").GetComponent<Text>();
+        pointP4 = GameObject.Find("P4_point").GetComponent<Text>();
         player1 = GameObject.Find("P1");
         player2 = GameObject.Find("P2");
         dice = GameObject.Find("Dice");
@@ -82,7 +87,6 @@ public class LoadQuestion : MonoBehaviour
             EnableQuestion(false);
         }
 
-        Debug.Log("GP = " + GameController.playerPlay);
     }
 
     #endregion //Main Methods
