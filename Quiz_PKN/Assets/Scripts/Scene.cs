@@ -8,9 +8,14 @@ public class Scene : MonoBehaviour
     // pindah scene ke menu
     public void MenuScene()
     {
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadScene("MenuScene");
     }
 
+    // pindah scene kellading
+    public void LoadingScene()
+    {
+        SceneManager.LoadScene("LoadingScene");
+    }
 
     // keluar dari game
     public void KeluarScene()

@@ -17,7 +17,8 @@ public class LoadQuestion : MonoBehaviour
 
     GameObject[] Path;
     public static bool QuestionAnswer;
-    public int answer;
+    public static bool IsCountDown;
+    public static float timeleft;
 
     #endregion //Public Variables
 
@@ -25,11 +26,12 @@ public class LoadQuestion : MonoBehaviour
 
     private List<Question> question = new List<Question>();
     private Question currentQuestion;
-    private Text QText, answerA, answerB, answerC, answerD;
+    private Text QText, timerTxt, answerA, answerB, answerC, answerD;
     private Text pointP1, pointP2, pointP3, pointP4;
     private Button btnA, btnB, btnC, btnD;
-    private SpriteRenderer QBoard;
+    private SpriteRenderer QBoard, TBoard;
     private GameObject player1, player2, dice;
+    private int randQuestIndex;
 
     #endregion //Private Variables
 
@@ -53,6 +55,8 @@ public class LoadQuestion : MonoBehaviour
         Path = GameObject.FindGameObjectsWithTag("Path");
         QText = GameObject.Find("question_text").GetComponent<Text>();
         QBoard = GameObject.Find("question_board").GetComponent<SpriteRenderer>();
+        TBoard = GameObject.Find("Timer_board").GetComponent<SpriteRenderer>();
+        timerTxt = GameObject.Find("Timer_answer").GetComponent<Text>();
         btnA = GameObject.Find("ButtonA").GetComponent<Button>();
         btnB = GameObject.Find("ButtonB").GetComponent<Button>();
         btnC = GameObject.Find("ButtonC").GetComponent<Button>();
@@ -63,11 +67,12 @@ public class LoadQuestion : MonoBehaviour
         answerD = GameObject.Find("btnD_txt").GetComponent<Text>();
         pointP1 = GameObject.Find("P1_point").GetComponent<Text>();
         pointP2 = GameObject.Find("P2_point").GetComponent<Text>();
-        pointP3 = GameObject.Find("P3_point").GetComponent<Text>();
-        pointP4 = GameObject.Find("P4_point").GetComponent<Text>();
+
         player1 = GameObject.Find("P1");
         player2 = GameObject.Find("P2");
         dice = GameObject.Find("Dice");
+
+        CekSprite();
 
         EnableQuestion(false);
 
@@ -81,6 +86,13 @@ public class LoadQuestion : MonoBehaviour
         {
             ShowQuestion();
         }
+
+        if(IsCountDown)
+        {
+            AnswerCountDown();
+        }
+
+        Debug.Log("Countdown = " + IsCountDown);
 
         if (Input.GetKeyDown("space"))
         {
@@ -122,6 +134,8 @@ public class LoadQuestion : MonoBehaviour
     private void EnableQuestion(bool visible)
     {
         QText.enabled = visible;
+        TBoard.enabled = visible;
+        timerTxt.enabled = visible;
         QBoard.enabled = visible;
         btnA.enabled = visible;
         btnB.enabled = visible;
@@ -139,19 +153,33 @@ public class LoadQuestion : MonoBehaviour
 
     public void VisiblePlayer(bool b)
     {
-        player1.SetActive(b);
-        player2.SetActive(b);
+        player1.GetComponent<SpriteRenderer>().enabled = b;
+        player2.GetComponent<SpriteRenderer>().enabled = b;
         dice.SetActive(b);
+    }
+
+    public void CekSprite()
+    {
+        switch (GameController.Players)
+        {
+            case 3:
+                pointP3 = GameObject.Find("P3_point").GetComponent<Text>();
+                break;
+            case 4:
+                pointP3 = GameObject.Find("P3_point").GetComponent<Text>();
+                pointP4 = GameObject.Find("P4_point").GetComponent<Text>();
+                break;
+        }
     }
 
     public void ShowQuestion()
     {
-        GameController.PlayCondition = 3;
+        GameController.PlayCondition = 0;
         GameController.playerPlay = 0;
 
         VisiblePlayer(false);
 
-        int randQuestIndex = Random.Range(0, question.Count);
+        randQuestIndex = Random.Range(0, question.Count);
 
         EnableQuestion(true);
 
@@ -160,38 +188,21 @@ public class LoadQuestion : MonoBehaviour
         answerB.text = question[randQuestIndex].choiceB;
         answerC.text = question[randQuestIndex].choiceC;
         answerD.text = question[randQuestIndex].choiceD;
-
-        CekQuestion(randQuestIndex);
-
     }
 
-    public void CekQuestion(int questIndex)
+    public void CekQuestion(int questIndex, int choice)
     {
-         answer = 0;
-        int ans = question[questIndex].answer;
+        GameController.PlayCondition = 0;
 
-        switch (EventSystem.current.currentSelectedGameObject.name)
-        {
-            case "ButtonA":
-                answer = 1;
-                break;
-            case "ButtonB":
-                answer = 2;
-                break;
-            case "ButtonC":
-                answer = 3;
-                break;
-            case "ButtonD":
-                answer = 4;
-                break;
-        }
+        int answer = question[questIndex].answer;
 
-        if (ans == answer || answer == 3 || answer == 4)
+        if (answer == choice)
         {
             Debug.Log("Jawaban Benar");
             QuestionAnswer = true;
             EnableQuestion(false);
             VisiblePlayer(true);
+            GameController.PlayCondition = 2;
         }
         else
         {
@@ -199,7 +210,7 @@ public class LoadQuestion : MonoBehaviour
             QuestionAnswer = false;
             EnableQuestion(false);
             VisiblePlayer(true);
-            GameController.PlayCondition = 0;
+
             Dice.whosTurn += 1;
             if (Dice.whosTurn > GameController.Players)
             {
@@ -207,23 +218,40 @@ public class LoadQuestion : MonoBehaviour
             }
             GameController.SetActivePlayer(Dice.whosTurn);
             Dice.coroutineAllowed = true;
+
+            GameController.PlayCondition = 0;
         }
 
-        
         question.RemoveAt(questIndex);
         if (question.Count == 0)
         {
             loadQuest();
         }
+
+        //answer = 0;
     }
 
+    public void SetBtnAnswer(int a)
+    {
+        IsCountDown = false;
+        CekQuestion(randQuestIndex, a);
+    }
 
+    public void AnswerCountDown()
+    {
+        timeleft -= Time.deltaTime;
+        timerTxt.text = Mathf.Round(timeleft).ToString();
+        if (timeleft < 0)
+        {
+            IsCountDown = false;
+            CekQuestion(randQuestIndex, 0);
+        }
+    }
 
     #endregion //Utility Methods
 
     //Coroutines run parallel to other fucntions
     #region Coroutines
-
 
     #endregion //Coroutines
 }

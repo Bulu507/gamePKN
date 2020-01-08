@@ -14,7 +14,7 @@ public class GameController : MonoBehaviour
     public static GameObject player1, player2, player3, player4;
     public static int playerPlay;
     public static int diceSideThrown;
-    public static int PlayCondition =0;
+    public static int PlayCondition;
     public static int Players =2;
     public static GameObject p1_panel, p2_panel, p3_panel, p4_panel;
     public static GameObject p1_on, p2_on, p3_on, p4_on;
@@ -47,11 +47,17 @@ public class GameController : MonoBehaviour
 
         p1_panel = GameObject.Find("p1_panel");
         p2_panel = GameObject.Find("p2_panel");
-        p3_panel = GameObject.Find("p3_panel");
-        p4_panel = GameObject.Find("p4_panel");
+        
 
         SetPlayer(Players);
         GameController.SetActivePlayer(1);
+
+        //Set Condition When Play
+        /* condition 0 = do nothing
+         * condition 1 = show question
+         * condition 2 = allow to roll dice
+        */
+        PlayCondition = 0;
     }
 
     // Update is called once per frame
@@ -91,17 +97,25 @@ public class GameController : MonoBehaviour
         switch (totalPlayer)
         {
             case 2:
-                player3.SetActive(false);
-                player4.SetActive(false);
+                p3_panel = GameObject.Find("p3_panel");
+                p4_panel = GameObject.Find("p4_panel");
+                player3.GetComponent<SpriteRenderer>().enabled = false;
+                player4.GetComponent<SpriteRenderer>().enabled = false;
+                p3_on.GetComponent<SpriteRenderer>().enabled = false;
+                p4_on.GetComponent<SpriteRenderer>().enabled = false;
                 p3_panel.SetActive(false);
                 p4_panel.SetActive(false);
-                p3_on.SetActive(false);
-                p4_on.SetActive(false);
                 break;
             case 3:
-                player4.SetActive(false);
+                p3_panel = GameObject.Find("p3_panel");
+                p4_panel = GameObject.Find("p4_panel");
+                player4.GetComponent<SpriteRenderer>().enabled = false;
+                p4_on.GetComponent<SpriteRenderer>().enabled = false;
                 p4_panel.SetActive(false);
-                p4_on.SetActive(false);
+                break;
+            case 4:
+                p3_panel = GameObject.Find("p3_panel");
+                p4_panel = GameObject.Find("p4_panel");
                 break;
         }
     }

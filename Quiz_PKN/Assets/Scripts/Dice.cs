@@ -10,7 +10,6 @@ public class Dice : MonoBehaviour
 
     #region Public Variables
 
-    public LoadQuestion TheQuestion;
     public Sprite[] diceSide;
     public static GameObject p1_panel, p2_panel;
     public static int whosTurn = 1;
@@ -58,8 +57,10 @@ public class Dice : MonoBehaviour
             if (GameController.PlayCondition == 0)
             {
                 GameController.PlayCondition = 1;
+                LoadQuestion.IsCountDown = true;
+                LoadQuestion.timeleft = 31f;
             }
-            else if (GameController.PlayCondition == 3)
+            else if (GameController.PlayCondition == 2)
             {
                 StartCoroutine("RollTheDice");
             }
