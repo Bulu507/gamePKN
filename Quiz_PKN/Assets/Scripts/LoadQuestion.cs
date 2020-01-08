@@ -19,6 +19,7 @@ public class LoadQuestion : MonoBehaviour
     public static bool QuestionAnswer;
     public static bool IsCountDown;
     public static float timeleft;
+    public GameObject answerTrue, answerFalse;
 
     #endregion //Public Variables
 
@@ -27,17 +28,17 @@ public class LoadQuestion : MonoBehaviour
     private List<Question> question = new List<Question>();
     private Question currentQuestion;
     private Text QText, timerTxt, answerA, answerB, answerC, answerD;
-    private Text pointP1, pointP2, pointP3, pointP4;
+    private Text pointP1Txt, pointP2Txt, pointP3Txt, pointP4Txt;
+    private int pointP1, pointP2, pointP3, pointP4;
     private Button btnA, btnB, btnC, btnD;
     private SpriteRenderer QBoard, TBoard;
-    private GameObject player1, player2, dice;
+    private GameObject player1, player2, player3, player4, dice;
     private int randQuestIndex;
+    
 
     #endregion //Private Variables
 
     #region Setter Getter
-
-
 
     #endregion //Setter Getter
 
@@ -65,12 +66,21 @@ public class LoadQuestion : MonoBehaviour
         answerB = GameObject.Find("btnB_txt").GetComponent<Text>();
         answerC = GameObject.Find("btnC_txt").GetComponent<Text>();
         answerD = GameObject.Find("btnD_txt").GetComponent<Text>();
-        pointP1 = GameObject.Find("P1_point").GetComponent<Text>();
-        pointP2 = GameObject.Find("P2_point").GetComponent<Text>();
+        pointP1Txt = GameObject.Find("P1_point").GetComponent<Text>();
+        pointP2Txt = GameObject.Find("P2_point").GetComponent<Text>();
 
         player1 = GameObject.Find("P1");
         player2 = GameObject.Find("P2");
+
+        pointP1 = 0;
+        pointP2 = 0;
+        pointP1Txt.text = pointP1.ToString();
+        pointP2Txt.text = pointP2.ToString();
+
         dice = GameObject.Find("Dice");
+
+        answerTrue.SetActive(false);
+        answerFalse.SetActive(false);
 
         CekSprite();
 
@@ -91,8 +101,6 @@ public class LoadQuestion : MonoBehaviour
         {
             AnswerCountDown();
         }
-
-        Debug.Log("Countdown = " + IsCountDown);
 
         if (Input.GetKeyDown("space"))
         {
@@ -153,8 +161,31 @@ public class LoadQuestion : MonoBehaviour
 
     public void VisiblePlayer(bool b)
     {
-        player1.GetComponent<SpriteRenderer>().enabled = b;
-        player2.GetComponent<SpriteRenderer>().enabled = b;
+        Debug.Log("total player = " + GameController.Players);
+        switch (GameController.Players)
+        {
+            case 2:
+                player1.GetComponent<SpriteRenderer>().enabled = b;
+                player2.GetComponent<SpriteRenderer>().enabled = b;
+                break;
+            case 3:
+                player3 = GameObject.Find("P3");
+
+                player1.GetComponent<SpriteRenderer>().enabled = b;
+                player2.GetComponent<SpriteRenderer>().enabled = b;
+                player3.GetComponent<SpriteRenderer>().enabled = b;
+                break;
+            case 4:
+                player3 = GameObject.Find("P3");
+                player4 = GameObject.Find("P4");
+
+                player1.GetComponent<SpriteRenderer>().enabled = b;
+                player2.GetComponent<SpriteRenderer>().enabled = b;
+                player3.GetComponent<SpriteRenderer>().enabled = b;
+                player4.GetComponent<SpriteRenderer>().enabled = b;
+                break;
+        }
+        
         dice.SetActive(b);
     }
 
@@ -163,11 +194,19 @@ public class LoadQuestion : MonoBehaviour
         switch (GameController.Players)
         {
             case 3:
-                pointP3 = GameObject.Find("P3_point").GetComponent<Text>();
+                pointP3Txt = GameObject.Find("P3_point").GetComponent<Text>();
+                pointP3 = 0;
+                pointP3Txt.text = pointP3.ToString();
                 break;
             case 4:
-                pointP3 = GameObject.Find("P3_point").GetComponent<Text>();
-                pointP4 = GameObject.Find("P4_point").GetComponent<Text>();
+                pointP3Txt = GameObject.Find("P3_point").GetComponent<Text>();
+                pointP4Txt = GameObject.Find("P4_point").GetComponent<Text>();
+
+                pointP3 = 0;
+                pointP4 = 0;
+
+                pointP3Txt.text = pointP3.ToString();
+                pointP4Txt.text = pointP4.ToString();
                 break;
         }
     }
@@ -195,21 +234,22 @@ public class LoadQuestion : MonoBehaviour
         GameController.PlayCondition = 0;
 
         int answer = question[questIndex].answer;
+        bool IsAnswerTrue;
 
         if (answer == choice)
         {
             Debug.Log("Jawaban Benar");
             QuestionAnswer = true;
-            EnableQuestion(false);
-            VisiblePlayer(true);
+            IsAnswerTrue = true;
+            UpdatePoint(Dice.whosTurn);
+
             GameController.PlayCondition = 2;
         }
         else
         {
             Debug.Log("Jawaban Salah");
             QuestionAnswer = false;
-            EnableQuestion(false);
-            VisiblePlayer(true);
+            IsAnswerTrue = false;
 
             Dice.whosTurn += 1;
             if (Dice.whosTurn > GameController.Players)
@@ -228,7 +268,8 @@ public class LoadQuestion : MonoBehaviour
             loadQuest();
         }
 
-        //answer = 0;
+        EnableQuestion(false);
+        StartCoroutine(ShowAnswer(IsAnswerTrue));
     }
 
     public void SetBtnAnswer(int a)
@@ -248,10 +289,54 @@ public class LoadQuestion : MonoBehaviour
         }
     }
 
+    public void UpdatePoint(int player)
+    {
+        switch (player)
+        {
+            case 1:
+                pointP1 += 10;
+                pointP1Txt.text = pointP1.ToString();
+                break;
+            case 2:
+                pointP2 += 10;
+                pointP2Txt.text = pointP2.ToString();
+                break;
+            case 3:
+                pointP3 += 10;
+                pointP3Txt.text = pointP3.ToString();
+                break;
+            case 4:
+                pointP4 += 10;
+                pointP4Txt.text = pointP4.ToString();
+                break;
+        }
+    }
+
     #endregion //Utility Methods
 
     //Coroutines run parallel to other fucntions
     #region Coroutines
+
+    private IEnumerator ShowAnswer(bool b)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        if (b == true)
+        {
+            answerTrue.SetActive(true);
+        }
+        else
+        {
+            answerFalse.SetActive(true);
+        }
+
+        yield return new WaitForSeconds(3);
+
+        answerTrue.SetActive(false);
+        answerFalse.SetActive(false);
+        
+        VisiblePlayer(true);
+    }
 
     #endregion //Coroutines
 }

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Menu : MonoBehaviour
 {
     public static string Mode;
-    public static int Players;
+    public static int TotalPlayers;
 
     public void SetMode(string mode)
     {
@@ -16,8 +16,8 @@ public class Menu : MonoBehaviour
 
     public void SetPlayers(int players)
     {
-        Players = players;
-        Debug.Log("players = " + Players);
+        TotalPlayers = players;
+        Debug.Log("players = " + TotalPlayers);
     }
 
 }

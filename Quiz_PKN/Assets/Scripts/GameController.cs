@@ -15,7 +15,7 @@ public class GameController : MonoBehaviour
     public static int playerPlay;
     public static int diceSideThrown;
     public static int PlayCondition;
-    public static int Players =2;
+    public static int Players;
     public static GameObject p1_panel, p2_panel, p3_panel, p4_panel;
     public static GameObject p1_on, p2_on, p3_on, p4_on;
 
@@ -47,7 +47,8 @@ public class GameController : MonoBehaviour
 
         p1_panel = GameObject.Find("p1_panel");
         p2_panel = GameObject.Find("p2_panel");
-        
+
+        Players = Menu.TotalPlayers;
 
         SetPlayer(Players);
         GameController.SetActivePlayer(1);
