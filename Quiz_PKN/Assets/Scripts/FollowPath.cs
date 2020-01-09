@@ -82,12 +82,14 @@ public class FollowPath : MonoBehaviour
         //}
 
         //when on a zonk
-        if (MyPath.IsIdle == true && MyPath.MovingTo == 8)
+        if (MyPath.IsIdle == true && MyPath.MovingTo == 60)
         {
-            MyPath.Move = "backward";
-            MyPath.GoingTo = movingValue - 3;
-            movingValue = MyPath.GoingTo;
-            diceValue = 0;
+            //MyPath.Move = "backward";
+            //MyPath.GoingTo = movingValue - 3;
+            //movingValue = MyPath.GoingTo;
+            //diceValue = 0;
+
+            GameController.IsFinish = true;
         }
 
 

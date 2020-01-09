@@ -16,8 +16,10 @@ public class GameController : MonoBehaviour
     public static int diceSideThrown;
     public static int PlayCondition;
     public static int Players;
+    public static string GameMode;
     public static GameObject p1_panel, p2_panel, p3_panel, p4_panel;
     public static GameObject p1_on, p2_on, p3_on, p4_on;
+    public static bool IsFinish;
 
     #endregion //Public Variables
 
@@ -49,6 +51,7 @@ public class GameController : MonoBehaviour
         p2_panel = GameObject.Find("p2_panel");
 
         Players = Menu.TotalPlayers;
+        GameMode = Menu.Mode;
 
         SetPlayer(Players);
         GameController.SetActivePlayer(1);
@@ -59,6 +62,7 @@ public class GameController : MonoBehaviour
          * condition 2 = allow to roll dice
         */
         PlayCondition = 0;
+        IsFinish = false;
     }
 
     // Update is called once per frame
