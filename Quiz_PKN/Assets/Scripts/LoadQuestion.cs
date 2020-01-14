@@ -319,6 +319,9 @@ public class LoadQuestion : MonoBehaviour
         if (GameController.GameMode == "Multiple")
         {
             int answer = question[questIndex].answer;
+
+            Debug.Log("jb = " + question[questIndex].answer);
+
             if (answer == choice)
             {
                 Debug.Log("Jawaban Benar");
@@ -399,7 +402,7 @@ public class LoadQuestion : MonoBehaviour
         if (timeleft < 0)
         {
             IsCountDown = false;
-            CekQuestion(randQuestIndex, 0, false);
+            CekQuestion(randQuestIndex, -1, false);
         }
     }
 
